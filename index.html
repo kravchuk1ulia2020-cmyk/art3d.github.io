@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Простір | Навчальні Відеоуроки</title>
+    <style>
+        body { font-family: sans-serif; background-color: #121214; color: #e1e1e6; margin: 0; padding: 0; }
+        header { background-color: #1a1a1e; padding: 30px 20px; text-align: center; border-bottom: 2px solid #33333a; }
+        header h1 { margin: 0; color: #00adb5; font-size: 2.5rem; }
+        header p { color: #aaaaaa; margin-top: 10px; font-size: 1.1rem; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { background-color: #1a1a1e; border-radius: 12px; overflow: hidden; border: 1px solid #33333a; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: #00adb5; }
+        .video-box { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .info { padding: 20px; }
+        .tag { display: inline-block; background-color: #252529; color: #00adb5; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; margin-bottom: 12px; }
+        .info h3 { margin: 0 0 10px 0; color: #ffffff; font-size: 1.3rem; }
+        .info p { font-size: 14px; color: #999999; line-height: 1.6; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Школа 3D Моделювання</h1>
+        <p>Курс відеоуроків для створення крутої графіки</p>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+
+            <!-- КАРТКА УРОКУ 1 -->
+            <div class="card">
+                <div class="video-box">
+                    <!-- Поки що тут стандартне тестове відео. Потім ви заміните його на своє -->
+                    <iframe src="https://youtube.com" allowfullscreen></iframe>
+                </div>
+                <div class="info">
+                    <span class="tag">Урок 1</span>
+                    <h3>Основи інтерфейсу та навігації</h3>
+                    <p>Перше знайомство з робочим простором програми, гарячими клавішами та базовими трансформаціями об'єктів.</p>
+                </div>
+            </div>
+
+            <!-- КАРТКА УРОКУ 2 -->
+            <div class="card">
+                <div class="video-box">
+                    <iframe src="https://youtube.com" allowfullscreen></iframe>
+                </div>
+                <div class="info">
+                    <span class="tag">Урок 2</span>
+                    <h3>Створення першої 3D-моделі</h3>
+                    <p>Практичне заняття з блокінгу та базового полігонального моделювання простого об'єкта за референсом.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
