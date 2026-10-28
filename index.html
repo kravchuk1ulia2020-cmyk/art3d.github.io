@@ -3,61 +3,883 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Простір | Навчальні Відеоуроки</title>
+    <meta name="description" content="Школа 3D-моделювання — професійні відеоуроки для початківців та досвідчених художників.">
+    <title>3D Простір | Школа 3D-моделювання</title>
     <style>
-        body { font-family: sans-serif; background-color: #121214; color: #e1e1e6; margin: 0; padding: 0; }
-        header { background-color: #1a1a1e; padding: 30px 20px; text-align: center; border-bottom: 2px solid #33333a; }
-        header h1 { margin: 0; color: #00adb5; font-size: 2.5rem; }
-        header p { color: #aaaaaa; margin-top: 10px; font-size: 1.1rem; }
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .card { background-color: #1a1a1e; border-radius: 12px; overflow: hidden; border: 1px solid #33333a; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: #00adb5; }
-        .video-box { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
-        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .info { padding: 20px; }
-        .tag { display: inline-block; background-color: #252529; color: #00adb5; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; margin-bottom: 12px; }
-        .info h3 { margin: 0 0 10px 0; color: #ffffff; font-size: 1.3rem; }
-        .info p { font-size: 14px; color: #999999; line-height: 1.6; margin: 0; }
+        :root {
+            --bg: #0b0d12;
+            --bg-soft: #111722;
+            --panel: rgba(20, 24, 33, 0.9);
+            --panel-strong: #171d2a;
+            --card: #131b29;
+            --card-alt: #101820;
+            --line: rgba(255,255,255,0.08);
+            --text: #edf3ff;
+            --muted: #aebed4;
+            --primary: #5eead4;
+            --primary-strong: #2dd4bf;
+            --accent: #7c9cff;
+            --warning: #fbbf24;
+            --shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            --radius: 22px;
+        }
+
+        * { box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(94, 234, 212, 0.10), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(124, 156, 255, 0.12), transparent 32%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(14px);
+            background: rgba(11, 13, 18, 0.72);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #06131e;
+            font-weight: 900;
+            box-shadow: 0 10px 30px rgba(94, 234, 212, 0.45);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .nav-links a {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            padding: 0.9rem 1.35rem;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            color: #041821;
+            background: linear-gradient(135deg, var(--primary), #7cf5d9);
+            box-shadow: 0 18px 40px rgba(45, 212, 191, 0.32);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.02);
+            border-color: rgba(255,255,255,0.08);
+            color: var(--text);
+        }
+
+        .hero {
+            padding: 72px 0 28px;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(94, 234, 212, 0.08);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 20px 0 18px;
+            font-size: clamp(2.7rem, 5vw, 5rem);
+            line-height: 1.05;
+            letter-spacing: -0.05em;
+        }
+
+        .hero-copy p {
+            margin: 0;
+            font-size: 1.09rem;
+            color: var(--muted);
+            max-width: 620px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(110px, 1fr));
+            gap: 16px;
+            margin-top: 34px;
+        }
+
+        .stat {
+            padding: 18px 16px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .visual-card {
+            width: min(100%, 430px);
+            background: linear-gradient(180deg, rgba(24, 31, 42, 0.92), rgba(9, 12, 15, 0.96));
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .visual-top {
+            height: 240px;
+            background:
+                linear-gradient(135deg, rgba(94, 234, 212, 0.18), rgba(124, 156, 255, 0.12)),
+                url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+            position: relative;
+        }
+
+        .play-badge {
+            position: absolute;
+            inset: auto auto 18px 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: rgba(11, 13, 18, 0.86);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .visual-body {
+            padding: 22px 22px 18px;
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-bottom: 16px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .feature-strip {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .feature {
+            padding: 20px 18px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+        }
+
+        .feature h3 {
+            margin: 12px 0 8px;
+            font-size: 1.08rem;
+        }
+
+        .feature p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.94rem;
+        }
+
+        .icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(94, 234, 212, 0.1);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        main {
+            padding-top: 24px;
+        }
+
+        .section {
+            padding: 36px 0 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-label {
+            font-size: 0.78rem;
+            color: var(--primary);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: clamp(2rem, 3vw, 2.7rem);
+            letter-spacing: -0.04em;
+        }
+
+        .section-header p {
+            margin: 0;
+            max-width: 520px;
+            color: var(--muted);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0 26px;
+        }
+
+        .filter {
+            padding: 9px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.02);
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.82rem;
+        }
+
+        .filter.active {
+            background: linear-gradient(135deg, rgba(94, 234, 212, 0.14), rgba(124, 156, 255, 0.15));
+            border-color: rgba(94, 234, 212, 0.28);
+            color: var(--text);
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+        }
+
+        .lesson-card {
+            background: linear-gradient(180deg, rgba(19, 27, 41, 0.96), rgba(12, 17, 24, 0.94));
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18);
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(94, 234, 212, 0.35);
+            box-shadow: 0 24px 56px rgba(10, 18, 30, 0.38);
+        }
+
+        .card-media {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-media::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 9, 14, 0.1), rgba(5, 9, 14, 0.62));
+        }
+
+        .play-button {
+            position: absolute;
+            left: 18px;
+            bottom: 18px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(11, 13, 18, 0.85);
+            border: 1px solid rgba(255,255,255,0.12);
+            z-index: 1;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .card-content {
+            padding: 18px 18px 20px;
+        }
+
+        .card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-time {
+            font-size: 0.76rem;
+            color: var(--muted);
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .card-tags .tag {
+            background: rgba(94, 234, 212, 0.08);
+            border-color: rgba(94, 234, 212, 0.18);
+        }
+
+        .lesson-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.28rem;
+            letter-spacing: -0.03em;
+        }
+
+        .lesson-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .card-footer {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .link-arrow {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .cta {
+            padding: 34px 0 24px;
+        }
+
+        .cta-box {
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            background: linear-gradient(135deg, rgba(94, 234, 212, 0.08), rgba(124, 156, 255, 0.08));
+            padding: clamp(24px, 4vw, 42px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-box h3 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+            letter-spacing: -0.04em;
+        }
+
+        .cta-box p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .site-footer {
+            padding: 36px 0 80px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            border-top: 1px solid var(--line);
+            padding-top: 18px;
+        }
+
+        @media (max-width: 920px) {
+            .nav {
+                flex-wrap: wrap;
+            }
+
+            .hero-content,
+            .feature-strip,
+            .cta-box {
+                grid-template-columns: 1fr;
+                display: grid;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .nav-actions {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .nav-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header,
+            .footer-inner,
+            .cta-box {
+                display: block;
+            }
+
+            .section-header p {
+                margin-top: 10px;
+            }
+
+            .hero {
+                padding-top: 42px;
+            }
+        }
     </style>
 </head>
 <body>
+    <header class="site-header">
+        <div class="container nav">
+            <a href="#top" class="brand" aria-label="Головна сторінка">
+                <span class="brand-mark">3D</span>
+                <span>3D Простір</span>
+            </a>
 
-    <header>
-        <h1>Школа 3D Моделювання</h1>
-        <p>Курс відеоуроків для створення крутої графіки</p>
+            <nav class="nav-links" aria-label="Навігація по сайту">
+                <a href="#about">Про школу</a>
+                <a href="#courses">Курси</a>
+                <a href="#lessons">Відеоуроки</a>
+                <a href="#reviews">Відгуки</a>
+                <a href="#contacts">Контакти</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#lessons" class="btn btn-secondary">Уроки</a>
+                <a href="#contacts" class="btn btn-primary">Записатися</a>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="grid">
+    <main id="top">
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-copy">
+                    <span class="eyebrow">Нова генерація 3D</span>
+                    <h1>Навчайся створювати предмети, сцени та ідеї в 3D.</h1>
+                    <p>
+                        Школа 3D-моделювання для тих, хто хоче освоїти Blender, створювати
+                        персонажів, об'єкти, архітектурні форми та портфоліо для роботи в індустрії.
+                    </p>
 
-            <!-- КАРТКА УРОКУ 1 -->
-            <div class="card">
-                <div class="video-box">
-                    <!-- Поки що тут стандартне тестове відео. Потім ви заміните його на своє -->
-                    <iframe src="https://youtube.com" allowfullscreen></iframe>
+                    <div class="hero-actions">
+                        <a href="#courses" class="btn btn-primary">Обрати курс</a>
+                        <a href="#lessons" class="btn btn-secondary">Переглянути уроки</a>
+                    </div>
+
+                    <div class="stats" aria-label="Статистика школи">
+                        <div class="stat">
+                            <strong>9+</strong>
+                            <span>років навчання</span>
+                        </div>
+                        <div class="stat">
+                            <strong>4.9</strong>
+                            <span>середній рейтинг</span>
+                        </div>
+                        <div class="stat">
+                            <strong>12k</strong>
+                            <span>студентів</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="info">
-                    <span class="tag">Урок 1</span>
-                    <h3>Основи інтерфейсу та навігації</h3>
-                    <p>Перше знайомство з робочим простором програми, гарячими клавішами та базовими трансформаціями об'єктів.</p>
+
+                <div class="hero-visual" aria-label="Демо-урок">
+                    <div class="visual-card">
+                        <div class="visual-top">
+                            <div class="play-badge">▶</div>
+                        </div>
+                        <div class="visual-body">
+                            <div class="meta-row">
+                                <span>Урок 01</span>
+                                <span>15 хв</span>
+                            </div>
+                            <div class="tags">
+                                <span class="tag">Blender</span>
+                                <span class="tag">Modeling</span>
+                                <span class="tag">cdWorks</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- КАРТКА УРОКУ 2 -->
-            <div class="card">
-                <div class="video-box">
-                    <iframe src="https://youtube.com" allowfullscreen></iframe>
+        <section class="container feature-strip" id="about">
+            <article class="feature">
+                <div class="icon-box">✦</div>
+                <h3>Професійна програма</h3>
+                <p>Покрокові уроки від основ до складних сцен: моделювання, текстурування, освітлення та рендер.</p>
+            </article>
+            <article class="feature">
+                <div class="icon-box">⚙</div>
+                <h3>Практика в реальних задачах</h3>
+                <p>Навчаємося створювати об'єкти, композиції та проєкти, що можна використовувати в портфоліо.</p>
+            </article>
+            <article class="feature">
+                <div class="icon-box">⬢</div>
+                <h3>Підтримка та зворотний зв'язок</h3>
+                <p>Розбір робіт, консультації та рекомендації для розвитку в індустрії 3D-дизайну.</p>
+            </article>
+        </section>
+
+        <section class="section" id="courses">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <div class="section-label">Курси</div>
+                        <h2>Прокладемо шлях від початку до професійного рівня</h2>
+                    </div>
+                    <p>Обирайте напрямок залежно від цілі: персонажі, об'єкти, сцени, архітектура або декоративний дизайн.</p>
                 </div>
-                <div class="info">
-                    <span class="tag">Урок 2</span>
-                    <h3>Створення першої 3D-моделі</h3>
-                    <p>Практичне заняття з блокінгу та базового полігонального моделювання простого об'єкта за референсом.</p>
+
+                <div class="filters" aria-label="Фільтри курсів">
+                    <button class="filter active" type="button">Усі</button>
+                    <button class="filter" type="button">Blender</button>
+                    <button class="filter" type="button">Hard Surface</button>
+                    <button class="filter" type="button">Lighting</button>
+                    <button class="filter" type="button">Portfolio</button>
                 </div>
             </div>
+        </section>
 
+        <section class="section" id="lessons">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <div class="section-label">Відеоуроки</div>
+                        <h2>Найкращі уроки для розвитку навичок</h2>
+                    </div>
+                    <p>Короткі, практичні ролики з чіткими поясненнями, які можна переглядати по одному або в навчальному циклі.</p>
+                </div>
+
+                <div class="lesson-grid">
+                    <article class="lesson-card">
+                        <div class="card-media" style="background-image: url('https://images.unsplash.com/photo-1564865878688-9a244444042a?auto=format&fit=crop&w=900&q=80');">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-head">
+                                <div class="card-tags">
+                                    <span class="tag">Blender</span>
+                                    <span class="tag">cdWorks</span>
+                                </div>
+                                <span class="card-time">12:48</span>
+                            </div>
+                            <h3>Основи інтерфейсу та навігації</h3>
+                            <p>Дізнайтеся, як працювати з робочим простором, іншими вікнами та інструментами в Blender.</p>
+                            <div class="card-footer">
+                                <span>Рівень: Початок</span>
+                                <span class="link-arrow">Дивитися →</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div class="card-media" style="background-image: url('https://images.unsplash.com/photo-1535378620166-273708d44e4c?auto=format&fit=crop&w=900&q=80');">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-head">
+                                <div class="card-tags">
+                                    <span class="tag">Model</span>
+                                    <span class="tag">Hard</span>
+                                </div>
+                                <span class="card-time">17:20</span>
+                            </div>
+                            <h3>Створення першої 3D-моделі</h3>
+                            <p>Практичний урок про базове моделювання, трансформації та створення примітивів з нуля.</p>
+                            <div class="card-footer">
+                                <span>Рівень: Новачок</span>
+                                <span class="link-arrow">Дивитися →</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div class="card-media" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80');">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-head">
+                                <div class="card-tags">
+                                    <span class="tag">UV</span>
+                                    <span class="tag">Texturing</span>
+                                </div>
+                                <span class="card-time">21:05</span>
+                            </div>
+                            <h3>Текстурування та покриття поверхні</h3>
+                            <p>Розбираємо UV-розгортку, матеріали та роботу з текстурами для реалістичних об'єктів.</p>
+                            <div class="card-footer">
+                                <span>Рівень: Середній</span>
+                                <span class="link-arrow">Дивитися →</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div class="card-media" style="background-image: url('https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=80');">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-head">
+                                <div class="card-tags">
+                                    <span class="tag">Lighting</span>
+                                    <span class="tag">Render</span>
+                                </div>
+                                <span class="card-time">14:32</span>
+                            </div>
+                            <h3>Освітлення та рендер сцен</h3>
+                            <p>Як зробити сцену світлою, глибокою та продаючою: від світла до фінального рендера.</p>
+                            <div class="card-footer">
+                                <span>Рівень: Середній</span>
+                                <span class="link-arrow">Дивитися →</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div class="card-media" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80');">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-head">
+                                <div class="card-tags">
+                                    <span class="tag">Portfolio</span>
+                                    <span class="tag">Showreel</span>
+                                </div>
+                                <span class="card-time">19:11</span>
+                            </div>
+                            <h3>Портфоліо для 3D-художника</h3>
+                            <p>Як правильно подати роботу, зібрати теми для проєктів та зробити вражаюче портфоліо.</p>
+                            <div class="card-footer">
+                                <span>Рівень: Професійний</span>
+                                <span class="link-arrow">Дивитися →</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div class="card-media" style="background-image: url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80');">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-head">
+                                <div class="card-tags">
+                                    <span class="tag">3D</span>
+                                    <span class="tag">Design</span>
+                                </div>
+                                <span class="card-time">16:42</span>
+                            </div>
+                            <h3>Декоративні об'єкти та prop design</h3>
+                            <p>Розробка інтер'єрних та декоративних елементів для сцен, об'єктів і презентацій.</p>
+                            <div class="card-footer">
+                                <span>Рівень: Досвід</span>
+                                <span class="link-arrow">Дивитися →</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" id="reviews">
+            <div class="container">
+                <div class="cta-box">
+                    <div>
+                        <div class="section-label">Відгуки</div>
+                        <h3>Почни створювати 3D-об'єкти вже сьогодні</h3>
+                        <p>Навчання побудоване на практиці, тому кожен урок допомагає підключити нові навички до реальної роботи.</p>
+                    </div>
+                    <a href="#contacts" class="btn btn-primary">Приєднатися</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="contacts">
+        <div class="container footer-inner">
+            <div>© 2026 3D Простір — школа 3D-моделювання</div>
+            <div>hello@3dspace.school • +38 (099) 123 45 67</div>
         </div>
-    </div>
-
+    </footer>
 </body>
 </html>
